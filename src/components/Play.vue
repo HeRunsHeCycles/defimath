@@ -1,23 +1,9 @@
 <template>
   <div class="hello">
-    <transition name="fade">
-      <div class="win" v-if="userWin"> 
-        <div>🎉 BRAVO 🎉</div>
-        <div>✨🏆🎖👑🐲🐉</div>
-        <button>Recommencer</button>
-      </div>
-    </transition>
     <div v-if="!userWin">
-      <h1>{{ currentQuestion }}</h1>
-      <div><input v-model="userAnswer" class="reponse" type="text"></div>
-      <button v-on:click="validerReponse" class="envoyer">GO ! 🌊</button>
-      <audio id="myAudio">
-        <source src="./static/fireworks.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
-
-      <h2>Résultat</h2>
-
+      <div class="question">{{ currentQuestion }}</div>
+      <div><input v-model="userAnswer" v-on:keyup.enter="validerReponse" ref="reponse" class="reponse" type="number" pattern="[0-9]*" inputmode="numeric"></div>
+      <button v-on:click="validerReponse">Envoyer ma réponse vers les Lunes ! 🚀</button>
       <ul class="resultat">
         <li v-for="reponse in reponsesJustes">🌕</li>
         <li v-for="reponse in getTotalReponsesRestantesPourGagner">🌑</li>
@@ -37,12 +23,16 @@ export default {
       userAnswer: null
     }
   },
-  created: function () {
+  created () {
     this.setNewQuestion()
+  },
+  mounted () {
+    this.resetGameState()
   },
   methods: {
     ...mapActions([
-      'makeUserWin' // map this.increment() to this.$store.dispatch('increment')
+      'makeUserWin', // map this.increment() to this.$store.dispatch('increment')
+      'resetGameState'
       // mapActions also supports payloads:
       // 'incrementBy' // this.incrementBy(amount) maps to this.$store.dispatch('incrementBy', amount)
     ]),
@@ -52,28 +42,16 @@ export default {
         this.checkIfWin()
         this.setNewQuestion()
         this.$data.userAnswer = null
+        this.$refs.reponse.focus()
       } else {
         this.$store.dispatch('mauvaisereponse')
+        this.$router.push('Youlost')
       }
     },
     checkIfWin: function () {
       if (this.$store.state.totalReponsesPourGagner === this.$store.state.reponsesJustes) {
         this.makeUserWin()
-        this.playSound()
-      }
-    },
-    playSound: function (name) {
-      let playPromise = document.getElementById('myAudio')
-      // In browsers that don’t yet support this functionality,
-      // playPromise won’t be defined.
-      if (playPromise !== undefined) {
-        playPromise.play().then(function () {
-          playPromise.play()
-        }).catch(function (error) {
-          if (error) {
-            console.log('bad')
-          }
-        })
+        this.$router.push('Victory')
       }
     },
     setNewQuestion: function () {
@@ -123,27 +101,17 @@ a {
 .win {
   font-size: 8em
 }
+.question {
+  font-size: 3em;
+  color: #607d8b;
+}
 .reponse{
   height: 2em;
   width: 10em;
   font-size: 3em;
 }
 
-.envoyer{
-  margin-top: 1em;
-  width: 7em;
-  height: 2em;
-  font-size: 3em;
-}
-
 .resultat{
   font-size: 4em;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 10s
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
-  opacity: 0
 }
 </style>

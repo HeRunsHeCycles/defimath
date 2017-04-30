@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     reponsesJustes: 0,
     reponsesFausses: 0,
-    totalReponsesPourGagner: 50,
+    totalReponsesPourGagner: 10,
     currentQuestion: '',
     goodAnswer: null,
     userAnwser: null,
@@ -32,6 +32,15 @@ export default new Vuex.Store({
     },
     userWin (state) {
       state.userWin = !state.userWin
+    },
+    resetUserWin (state) {
+      state.userWin = false
+    },
+    resetReponsesJustes (state) {
+      state.reponsesJustes = 0
+    },
+    resetReponsesFausses (state) {
+      state.reponsesFausses = 0
     }
   },
   actions: {
@@ -52,6 +61,11 @@ export default new Vuex.Store({
     },
     makeUserWin ({ commit }) {
       commit('userWin')
+    },
+    resetGameState ({ commit }) {
+      commit('resetUserWin')
+      commit('resetReponsesJustes')
+      commit('resetReponsesFausses')
     }
   }
 })
