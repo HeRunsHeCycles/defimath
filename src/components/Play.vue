@@ -76,8 +76,10 @@ export default {
       }
     },
     setNewQuestion: function () {
-      let leftNumber = Math.floor((Math.random() * 5) + 1)
-      let rightNumber = Math.floor((Math.random() * 10) + 1)
+      let leftArray = [3, 4, 5]
+      let rightArray = [3, 4, 5, 6, 7, 8, 9]
+      let leftNumber = leftArray[Math.floor(Math.random() * leftArray.length)]
+      let rightNumber = rightArray[Math.floor(Math.random() * rightArray.length)]
       let goodAnswer = leftNumber * rightNumber
       let newQuestion = 'Calcule ' + leftNumber + ' fois ' + rightNumber
       this.$store.dispatch('setCurrentQuestion', newQuestion)
