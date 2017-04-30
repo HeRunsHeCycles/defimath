@@ -3,7 +3,13 @@
     <div v-if="!userWin">
       <div class="question">{{ currentQuestion }}</div>
       <div><input v-model="userAnswer" v-on:keyup.enter="validerReponse" ref="reponse" class="reponse" type="number" pattern="[0-9]*" inputmode="numeric"></div>
-      <button v-on:click="validerReponse">Envoyer ma réponse vers les Lunes ! 🚀</button>
+      <button v-on:click="validerReponse">Envoyer ma réponse ! 🚀</button>
+      <audio id="blipaudio">
+        <source src="./static/blip.mp3" type="audio/mpeg">
+        <source src="./static/blip.m4a" type="audio/mpeg" />
+        <source src="./static/blip.ogg" type="audio/ogg" />
+        Your browser does not support the audio element.
+      </audio>
       <ul class="resultat">
         <li v-for="reponse in reponsesJustes">🌕</li>
         <li v-for="reponse in getTotalReponsesRestantesPourGagner">🌑</li>
@@ -36,10 +42,25 @@ export default {
       // mapActions also supports payloads:
       // 'incrementBy' // this.incrementBy(amount) maps to this.$store.dispatch('incrementBy', amount)
     ]),
+    playSound: function (name) {
+      let playPromise = document.getElementById('blipaudio')
+      // In browsers that don’t yet support this functionality,
+      // playPromise won’t be defined.
+      if (playPromise !== undefined) {
+        playPromise.play().then(function () {
+          playPromise.play()
+        }).catch(function (error) {
+          if (error) {
+            console.log('bad')
+          }
+        })
+      }
+    },
     validerReponse: function () {
       if (this.$store.state.goodAnswer === Number(this.$data.userAnswer)) {
         this.$store.dispatch('bonnereponse')
         this.checkIfWin()
+        this.playSound()
         this.setNewQuestion()
         this.$data.userAnswer = null
         this.$refs.reponse.focus()
@@ -58,7 +79,7 @@ export default {
       let leftNumber = Math.floor((Math.random() * 5) + 1)
       let rightNumber = Math.floor((Math.random() * 10) + 1)
       let goodAnswer = leftNumber * rightNumber
-      let newQuestion = 'calcule ' + leftNumber + ' fois ' + rightNumber
+      let newQuestion = 'Calcule ' + leftNumber + ' fois ' + rightNumber
       this.$store.dispatch('setCurrentQuestion', newQuestion)
       this.$store.dispatch('setGoodAnswer', goodAnswer)
     }
