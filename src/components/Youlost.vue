@@ -2,9 +2,9 @@
   <div class="youlost">
     <transition name="fade">
       <div class="win"> 
-        <div>😿 Perdu ! 😿💥💣  </div>
-        <div>🐲 Le Dragon restera dans la prison de la Lune Noire</div>
-        <div>🌑  </div>
+        <div>😿 Perdu ! 😿 </div>
+        <div>Le Dragon restera dans la prison de la Lune Noire</div>
+        <div>🐲 🌑</div>
         <audio id="myAudio">
           <source src="./static/thunder.mp3" type="audio/mpeg">
           <source src="./static/thunder.m4a" type="audio/mpeg" />
