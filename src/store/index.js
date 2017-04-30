@@ -7,10 +7,11 @@ export default new Vuex.Store({
   state: {
     reponsesJustes: 0,
     reponsesFausses: 0,
-    totalReponsesPourGagner: 10,
+    totalReponsesPourGagner: 50,
     currentQuestion: '',
-    currentAnswer: null,
-    userAnwser: null
+    goodAnswer: null,
+    userAnwser: null,
+    userWin: false
 
   },
   mutations: {
@@ -23,11 +24,14 @@ export default new Vuex.Store({
     currentQuestion (state, question) {
       state.currentQuestion = question
     },
-    currentAnswer (state, answer) {
-      state.currentAnswer = answer
+    goodAnswer (state, answer) {
+      state.goodAnswer = answer
     },
     currentUserAnswer (state, userAnswer) {
       state.userAnwser = userAnswer
+    },
+    userWin (state) {
+      state.userWin = !state.userWin
     }
   },
   actions: {
@@ -40,11 +44,14 @@ export default new Vuex.Store({
     setCurrentQuestion ({ commit }, question) {
       commit('currentQuestion', question)
     },
-    setCurrentAnswer ({ commit }, answer) {
-      commit('currentAnswer', answer)
+    setGoodAnswer ({ commit }, answer) {
+      commit('goodAnswer', answer)
     },
     setCurrentUserAnswer ({ commit }, userAnswer) {
       commit('currentUserAnswer', userAnswer)
+    },
+    makeUserWin ({ commit }) {
+      commit('userWin')
     }
   }
 })
