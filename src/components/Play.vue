@@ -3,7 +3,10 @@
     <div v-if="!userWin">
       <div class="question">{{ currentQuestion }}</div>
       <div><input v-model="userAnswer" v-on:keyup.enter="validerReponse" ref="reponse" class="reponse" type="number" pattern="[0-9]*" inputmode="numeric"></div>
-      <button v-on:click="validerReponse">Envoyer ma réponse ! 🚀</button>
+      <button 
+        v-bind:disabled="!canBeSubmited" 
+        v-on:click="validerReponse">Envoyer ma réponse ! 🚀
+      </button>
       <audio id="blipaudio">
         <source src="./static/blip.mp3" type="audio/mpeg">
         <source src="./static/blip.m4a" type="audio/mpeg" />
@@ -26,7 +29,7 @@ export default {
   data () {
     return {
       msg: 'Un défi pour H',
-      userAnswer: null
+      userAnswer: ''
     }
   },
   created () {
@@ -57,12 +60,15 @@ export default {
       }
     },
     validerReponse: function () {
+      if (this.userAnswer === '') {
+        return
+      }
       if (this.$store.state.goodAnswer === Number(this.$data.userAnswer)) {
         this.$store.dispatch('bonnereponse')
         this.checkIfWin()
         this.playSound()
         this.setNewQuestion()
-        this.$data.userAnswer = null
+        this.$data.userAnswer = ''
         this.$refs.reponse.focus()
       } else {
         this.$store.dispatch('mauvaisereponse')
@@ -95,6 +101,13 @@ export default {
       'reponsesJustes',
       'totalReponsesPourGagner'
     ]),
+    canBeSubmited: function () {
+      if (this.userAnswer === '') {
+        return false
+      } else {
+        return true
+      }
+    },
     getTotalReponsesRestantesPourGagner: function () {
       return this.$store.state.totalReponsesPourGagner - this.$store.state.reponsesJustes
     }

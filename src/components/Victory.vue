@@ -3,8 +3,10 @@
     <transition name="fade">
       <div class="win"> 
         <div>🎉 BRAVO 🎉</div>
-        <div>🐲 Le Dragon de Kai Loon est libre 🐲</div>
-        <div>✨🏆🎖👑🐲🐉</div>
+        <div class="dragon">🐲</div>
+        <div>Le Dragon de Kai Loon est libre</div>
+        <div class="dragon">🐉</div>
+        <div>✨🏆🎖👑</div>
         <audio id="myAudio">
           <source src="./static/fireworks.mp3" type="audio/mpeg">
           <source src="./static/fireworks.m4a" type="audio/mpeg" />
@@ -47,6 +49,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.dragon{
+  font-size: 2em
+}
 .win {
   font-size: 6em
 }

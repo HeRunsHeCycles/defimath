@@ -2,13 +2,15 @@
   <div class="youlost">
     <transition name="fade">
       <div class="win"> 
-        <div>😿 Perdu ! 😿 </div>
+        <div>🐙🐙🐙🐙🐙🐙🐙</div>
+        <div>👻 Perdu !</div>
+        <div>🐙🐙🐙🐙🐙🐙🐙</div>
         <div>Le Dragon restera dans la prison de la Lune Noire</div>
         <div>🐲 🌑</div>
         <audio id="myAudio">
-          <source src="./static/thunder.mp3" type="audio/mpeg">
-          <source src="./static/thunder.m4a" type="audio/mpeg" />
-          <source src="./static/thunder.ogg" type="audio/ogg" />
+          <source src="./static/duck.mp3" type="audio/mpeg">
+          <source src="./static/duck.m4a" type="audio/mpeg" />
+          <source src="./static/duck.ogg" type="audio/ogg" />
           Your browser does not support the audio element.
         </audio>
         <button v-on:click="reload">Recommencer</button>
@@ -48,7 +50,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .win {
-  font-size: 5em
+  font-size: 3em
 }
 
 .fade-enter-active  {

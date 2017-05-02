@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     reponsesJustes: 0,
     reponsesFausses: 0,
-    totalReponsesPourGagner: 10,
+    totalReponsesPourGagner: 50,
     currentQuestion: '',
     goodAnswer: null,
     userAnwser: null,
